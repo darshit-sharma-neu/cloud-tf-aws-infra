@@ -3,7 +3,7 @@ resource "aws_vpc" "csye6225_vpc" {
   cidr_block = var.cidr_block
 
   tags = {
-    Name = "csye6225_vpc"
+    Name = var.vpc_tag_name
   }
 }
 
@@ -15,7 +15,7 @@ resource "aws_subnet" "public_subnets" {
   availability_zone = element(var.availability_zones, count.index)
 
   tags = {
-    Name = "csye6225_public_subnet_${count.index}"
+    Name = "${var.public_subnet_tag_name}_${count.index}"
   }
 }
 
@@ -27,7 +27,7 @@ resource "aws_subnet" "private_subnets" {
   availability_zone = element(var.availability_zones, count.index)
 
   tags = {
-    Name = "csye6225_public_subnet_${count.index}"
+    Name = "${var.public_subnet_tag_name}_${count.index}"
   }
 }
 
@@ -36,7 +36,7 @@ resource "aws_internet_gateway" "csye6225_igw" {
   vpc_id = aws_vpc.csye6225_vpc.id
 
   tags = {
-    Name = "csye6225_igw"
+    Name = var.igw_tag_name
   }
 }
 
@@ -50,7 +50,7 @@ resource "aws_route_table" "public_route_table" {
   }
 
   tags = {
-    Name = "csye6225_public_route_table"
+    Name = var.public_route_table_tag_name
   }
 }
 
@@ -65,7 +65,7 @@ resource "aws_route_table" "private_route_table" {
   vpc_id = aws_vpc.csye6225_vpc.id
 
   tags = {
-    Name = "csye6225_private_route_table"
+    Name = var.private_route_table_tag_name
   }
 }
 
