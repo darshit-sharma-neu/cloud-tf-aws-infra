@@ -8,7 +8,7 @@ on:
     
 jobs:
   terraform:
-    name: "Run terraform fmt"
+    name: "Run terraform validate and fmt"
     runs-on: ubuntu-latest
 
     defaults:
