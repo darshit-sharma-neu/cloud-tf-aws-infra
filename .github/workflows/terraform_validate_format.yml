@@ -1,9 +1,10 @@
-name: Check Terraform Code Formatting
+name: Check Terraform Code Formatting And Validity
 
 on:
   pull_request:
     branches:
       - main
+  
     
 jobs:
   terraform:
@@ -24,5 +25,10 @@ jobs:
       - name: Terraform init
         run: terraform init
 
+      - name: Terraform Validate
+        run: terraform validate
+      
       - name: Terraform fmt
         run: terraform fmt -check -recursive
+
+      
