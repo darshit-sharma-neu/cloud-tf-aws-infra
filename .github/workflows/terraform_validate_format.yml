@@ -1,0 +1,33 @@
+name: Check Terraform Code Formatting And Validity
+
+on:
+  pull_request:
+    branches:
+      - main
+  
+jobs:
+  terraform:
+    name: "Run terraform validate and fmt"
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+      
+      - name: Terraform fmt
+        run: terraform fmt -check -recursive
+
+      
