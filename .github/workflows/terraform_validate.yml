@@ -1,4 +1,4 @@
-name: Run Terraform Format(fmt)
+name: Check Terraform Validity
 
 on:
   pull_request:

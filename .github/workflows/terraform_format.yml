@@ -1,4 +1,4 @@
-name: Run Terraform Format(fmt)
+name: Check Terraform Code Formatting
 
 on:
   pull_request:
