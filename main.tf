@@ -1,5 +1,5 @@
-module "vpcc" {
-  source = "./modules/vpc"
+module "vpc" {
+  ource = "./modules/vpc"
 
   availability_zones    = var.availability_zones
   cidr_block            = var.cidr_block
