@@ -1,4 +1,4 @@
-module "vpc" {
+module "vpcc" {
   source = "./modules/vpc"
 
   availability_zones    = var.availability_zones
