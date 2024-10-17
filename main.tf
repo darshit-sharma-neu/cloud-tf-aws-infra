@@ -19,12 +19,12 @@ module "vpc" {
 module "ec2" {
   source = "./modules/ec2"
 
-  ami           = var.ami
-  instance_type = var.instance_type
-  subnet_id     = module.vpc.public_subnet_ids[0]
-  vpc_id        = module.vpc.vpc_id
-  app_port      = var.app_port
+  ami                 = var.ami
+  instance_type       = var.instance_type
+  subnet_id           = module.vpc.public_subnet_ids[0]
+  vpc_id              = module.vpc.vpc_id
+  app_port            = var.app_port
   security_group_name = var.security_group_name
-  instance_name = var.instance_name
+  instance_name       = var.instance_name
 }
 
