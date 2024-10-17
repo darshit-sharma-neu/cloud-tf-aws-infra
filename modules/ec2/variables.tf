@@ -28,6 +28,6 @@ variable "instance_name" {
 }
 
 variable "security_group_description" {
-  type = string
+  type    = string
   default = "Security group for webapp"
 }
