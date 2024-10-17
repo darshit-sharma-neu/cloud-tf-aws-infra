@@ -1,3 +1,4 @@
+# VPC Variables
 variable "availability_zones" {
   type = list(string)
 }
@@ -47,5 +48,25 @@ variable "public_route_table_association_tag_name" {
 }
 
 variable "private_route_table_tag_name" {
+  type = string
+}
+
+# EC2 Variables
+variable "security_group_name" {
+  type = string
+}
+variable "app_port" {
+  type = number
+}
+
+variable "ami" {
+  type = string
+}
+
+variable "instance_type" {
+  type = string
+}
+
+variable "instance_name" {
   type = string
 }
