@@ -57,7 +57,13 @@ resource "aws_instance" "instance" {
   instance_type               = var.instance_type
   security_groups             = [aws_security_group.webapp_security_group.id]
   subnet_id                   = var.subnet_id
-  associate_public_ip_address = true
+  associate_public_ip_address = var.associate_public_ip_address
+  disable_api_termination     = var.disable_api_termination
+  root_block_device {
+    volume_size           = var.volume_size
+    volume_type           = var.volume_type
+    delete_on_termination = var.delete_on_termination
+  }
   tags = {
     Name = var.instance_name
   }

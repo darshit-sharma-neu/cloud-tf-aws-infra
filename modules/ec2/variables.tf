@@ -31,3 +31,26 @@ variable "security_group_description" {
   type    = string
   default = "Security group for webapp"
 }
+
+variable "associate_public_ip_address" {
+  type    = bool
+  default = true
+}
+
+variable "disable_api_termination" {
+  type    = bool
+  default = false
+}
+
+variable "delete_on_termination" {
+  type    = bool
+  default = false
+}
+
+variable "volume_size" {
+  type = number
+}
+
+variable "volume_type" {
+  type = string
+}
