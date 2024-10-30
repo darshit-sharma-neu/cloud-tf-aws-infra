@@ -29,3 +29,13 @@ resource "aws_instance" "instance" {
     Name = var.instance_name
   }
 }
+
+# Create Route 53 record to associate with the EC2 instances public IP
+resource "aws_route53_record" "ec2_mapping" {
+  depends_on = [aws_instance.instance]
+  zone_id    = var.route53_zone_id
+  name       = var.route53_record_name
+  type       = var.route53_record_type
+  ttl        = var.route53_record_ttl
+  records    = [aws_instance.instance.public_ip]
+}

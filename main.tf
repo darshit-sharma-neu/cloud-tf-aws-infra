@@ -150,4 +150,9 @@ module "ec2" {
   db_name     = var.db_name
   db_username = var.db_username
   db_password = var.db_password
+
+  route53_zone_id     = var.route53_zone_id
+  route53_record_name = var.route53_record_name
+  route53_record_type = var.route53_record_type
+  route53_record_ttl  = var.route53_record_ttl
 }

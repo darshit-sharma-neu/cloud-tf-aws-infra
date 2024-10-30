@@ -98,6 +98,19 @@ variable "volume_type" {
   type = string
 }
 
+variable "route53_zone_id" {
+  type = string
+}
+variable "route53_record_name" {
+  type = string
+}
+variable "route53_record_type" {
+  type = string
+}
+variable "route53_record_ttl" {
+  type = string
+}
+
 # RDS Variables
 variable "db_security_group_name" {
   type = string

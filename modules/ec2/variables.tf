@@ -74,3 +74,16 @@ variable "db_port" {
 variable "db_name" {
   type = string
 }
+
+variable "route53_zone_id" {
+  type = string
+}
+variable "route53_record_name" {
+  type = string
+}
+variable "route53_record_type" {
+  type = string
+}
+variable "route53_record_ttl" {
+  type = string
+}
