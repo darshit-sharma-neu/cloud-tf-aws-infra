@@ -189,4 +189,5 @@ module "ec2" {
   iam_instance_profile = aws_iam_instance_profile.webapp_instance_profile.name
 
   cloudwatch_logs_group_name = var.cloudwatch_logs_group_name
+  cloudwatch_metric_namespace = var.cloudwatch_metric_namespace
 }

@@ -118,6 +118,10 @@ variable "cloudwatch_logs_rentention_period" {
   type = number
 }
 
+variable "cloudwatch_metric_namespace" {
+  type = string
+}
+
 # RDS Variables
 variable "db_security_group_name" {
   type = string

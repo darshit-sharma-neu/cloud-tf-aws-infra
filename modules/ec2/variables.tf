@@ -99,3 +99,7 @@ variable "iam_instance_profile" {
 variable "cloudwatch_logs_group_name" {
   type = string
 }
+
+variable "cloudwatch_metric_namespace" {
+  type = string
+}

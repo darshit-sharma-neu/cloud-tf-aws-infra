@@ -43,7 +43,7 @@ resource "aws_instance" "instance" {
         }
       },
       "metrics": {
-        "namespace": "csye6225-webapp",  
+        "namespace": "${var.cloudwatch_metric_namespace}",  
         "metrics_collected": {
           "statsd": {
             "service_address": ":8125"
