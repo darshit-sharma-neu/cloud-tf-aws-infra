@@ -74,3 +74,32 @@ variable "db_port" {
 variable "db_name" {
   type = string
 }
+
+variable "route53_zone_id" {
+  type = string
+}
+variable "route53_record_name" {
+  type = string
+}
+variable "route53_record_type" {
+  type = string
+}
+variable "route53_record_ttl" {
+  type = string
+}
+
+variable "bucket_name" {
+  type = string
+}
+
+variable "iam_instance_profile" {
+  type = string
+}
+
+variable "cloudwatch_logs_group_name" {
+  type = string
+}
+
+variable "cloudwatch_metric_namespace" {
+  type = string
+}

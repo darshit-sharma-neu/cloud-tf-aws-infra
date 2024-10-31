@@ -98,6 +98,30 @@ variable "volume_type" {
   type = string
 }
 
+variable "route53_zone_id" {
+  type = string
+}
+variable "route53_record_name" {
+  type = string
+}
+variable "route53_record_type" {
+  type = string
+}
+variable "route53_record_ttl" {
+  type = string
+}
+
+variable "cloudwatch_logs_group_name" {
+  type = string
+}
+variable "cloudwatch_logs_rentention_period" {
+  type = number
+}
+
+variable "cloudwatch_metric_namespace" {
+  type = string
+}
+
 # RDS Variables
 variable "db_security_group_name" {
   type = string
@@ -155,5 +179,37 @@ variable "db_param_group_description" {
 }
 
 variable "db_identifier" {
+  type = string
+}
+
+variable "transition_rule_days" {
+  type = string
+}
+variable "transition_rule_storage_class" {
+  type = string
+}
+variable "sse_algorithm" {
+  type = string
+}
+variable "force_destroy" {
+  type = string
+}
+variable "transition_rule_status" {
+  type = string
+}
+
+variable "role_name" {
+  type = string
+}
+variable "s3_policy_name" {
+  type = string
+}
+variable "s3_policy_description" {
+  type = string
+}
+variable "cloudwatch_policy_name" {
+  type = string
+}
+variable "cloudwatch_policy_description" {
   type = string
 }

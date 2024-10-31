@@ -122,7 +122,35 @@ module "db_instance" {
   db_param_group_family      = var.db_param_group_family
   db_param_group_description = var.db_param_group_description
 
+}
 
+
+# Create S3 bucket
+module "s3_bucket" {
+  source = "./modules/s3"
+
+  transition_rule_days          = var.transition_rule_days
+  transition_rule_storage_class = var.transition_rule_storage_class
+  sse_algorithm                 = var.sse_algorithm
+  force_destroy                 = var.force_destroy
+  transition_rule_status        = var.transition_rule_status
+}
+
+# Create IAM Role
+module "iam_role" {
+  source = "./modules/iam"
+
+  s3_bucket_name                = module.s3_bucket.bucket_name
+  role_name                     = var.role_name
+  s3_policy_name                = var.s3_policy_name
+  s3_policy_description         = var.s3_policy_description
+  cloudwatch_policy_name        = var.cloudwatch_policy_name
+  cloudwatch_policy_description = var.cloudwatch_policy_description
+}
+
+resource "aws_iam_instance_profile" "webapp_instance_profile" {
+  name = "webapp_instance_profile"
+  role = module.iam_role.role_name
 
 }
 
@@ -130,7 +158,7 @@ module "db_instance" {
 # Create EC2 Instace
 module "ec2" {
   source     = "./modules/ec2"
-  depends_on = [module.db_instance]
+  depends_on = [module.db_instance, module.s3_bucket, module.iam_role]
 
   ami                         = var.ami
   instance_type               = var.instance_type
@@ -150,4 +178,16 @@ module "ec2" {
   db_name     = var.db_name
   db_username = var.db_username
   db_password = var.db_password
+
+  bucket_name = module.s3_bucket.bucket_name
+
+  route53_zone_id     = var.route53_zone_id
+  route53_record_name = var.route53_record_name
+  route53_record_type = var.route53_record_type
+  route53_record_ttl  = var.route53_record_ttl
+
+  iam_instance_profile = aws_iam_instance_profile.webapp_instance_profile.name
+
+  cloudwatch_logs_group_name  = var.cloudwatch_logs_group_name
+  cloudwatch_metric_namespace = var.cloudwatch_metric_namespace
 }

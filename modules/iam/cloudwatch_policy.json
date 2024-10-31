@@ -1,0 +1,20 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "cloudwatch:PutMetricData",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "logs:DescribeLogStreams",
+        "logs:CreateLogGroup",
+        "cloudwatch:ListMetrics",
+        "ec2:DescribeTags",
+        "ec2:DescribeInstances",
+        "ssm:GetParameter"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
