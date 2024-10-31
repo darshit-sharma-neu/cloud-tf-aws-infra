@@ -87,3 +87,15 @@ variable "route53_record_type" {
 variable "route53_record_ttl" {
   type = string
 }
+
+variable "bucket_name" {
+  type = string
+}
+
+variable "iam_instance_profile" {
+  type = string
+}
+
+variable "cloudwatch_logs_group_name" {
+  type = string
+}

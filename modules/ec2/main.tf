@@ -6,6 +6,7 @@ resource "aws_instance" "instance" {
   subnet_id                   = var.subnet_id
   associate_public_ip_address = var.associate_public_ip_address
   disable_api_termination     = var.disable_api_termination
+  iam_instance_profile        = var.iam_instance_profile
   root_block_device {
     volume_size           = var.volume_size
     volume_type           = var.volume_type
@@ -22,8 +23,38 @@ resource "aws_instance" "instance" {
     Environment=DB_PASS=${var.db_password}
     Environment=DB_PORT=${var.db_port}
     Environment=DB_NAME=${var.db_name}
+    Environment=BUCKET_NAME=${var.bucket_name}
     EOL
+
+    cat <<EOT > /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
+    {
+      "logs": {
+        "logs_collected": {
+          "files": {
+            "collect_list": [
+              {
+                "file_path": "/home/webapp/logs/app.log",           
+                "log_group_name": "${var.cloudwatch_logs_group_name}", 
+                "log_stream_name": "{instance_id}", 
+                "timestamp_format": "%Y-%m-%d %H:%M:%S"
+              }
+            ]
+          }
+        }
+      },
+      "metrics": {
+        "namespace": "csye6225-webapp",  
+        "metrics_collected": {
+          "statsd": {
+            "service_address": ":8125"
+          }
+        }
+      }
+    }
+    EOT
+
     sudo systemctl daemon-reload
+    sudo systemctl restart amazon-cloudwatch-agent
   EOF
   tags = {
     Name = var.instance_name
