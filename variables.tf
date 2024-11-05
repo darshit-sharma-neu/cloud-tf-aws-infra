@@ -213,3 +213,10 @@ variable "cloudwatch_policy_name" {
 variable "cloudwatch_policy_description" {
   type = string
 }
+
+variable "load_balancer_security_group_name" {
+  type = string
+}
+variable "load_balancer_security_group_description" {
+  type = string
+}

@@ -39,6 +39,38 @@ module "rds_security_group" {
   }
 }
 
+# Create loadbalancer security group
+module "load_balancer_security_group" {
+  source = "./modules/security_groups"
+
+  vpc_id              = module.vpc.vpc_id
+  security_group_name = var.load_balancer_security_group_name
+  description         = var.load_balancer_security_group_description
+
+  ingress_rules = [{
+    description = "Allow HTTP from anywhere"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    },
+    {
+      description = "Allow HTTPS from anywhere"
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  ]
+
+  egress_rules = []
+
+  tags = {
+    Name = var.load_balancer_security_group_name
+  }
+
+}
+
 # Create ec2 security group
 module "app_security_group" {
   source = "./modules/security_groups"
@@ -48,43 +80,21 @@ module "app_security_group" {
   description         = var.app_security_group_description
   ingress_rules = [
     {
-      description = "Allow SSH from anywhere"
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
+      description     = "Allow SSH from load balancer security group"
+      from_port       = 22
+      to_port         = 22
+      protocol        = "tcp"
+      security_groups = [module.load_balancer_security_group.security_group_id]
     }
     , {
-      description = "Allow HTTP from anywhere"
-      from_port   = 80
-      to_port     = 80
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-    , {
-      description = "Allow HTTPS from anywhere"
-      from_port   = 443
-      to_port     = 443
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-    , {
-      description = "Allow Application traffic from anywhere"
-      from_port   = var.app_port
-      to_port     = var.app_port
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
+      description     = "Allow Application traffic load balancer security group"
+      from_port       = var.app_port
+      to_port         = var.app_port
+      protocol        = "tcp"
+      security_groups = [module.app_security_group.security_group_id]
     }
   ]
-  egress_rules = [
-    {
-      description = "Allow all traffic to anywhere"
-      from_port   = 0
-      to_port     = 0
-      protocol    = "-1"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-  ]
+  egress_rules = []
   tags = {
     Name = var.app_security_group_name
   }
@@ -153,7 +163,6 @@ resource "aws_iam_instance_profile" "webapp_instance_profile" {
   role = module.iam_role.role_name
 
 }
-
 
 # Create EC2 Instace
 module "ec2" {
