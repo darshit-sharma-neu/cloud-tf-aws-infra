@@ -84,7 +84,7 @@ module "app_security_group" {
       from_port       = 22
       to_port         = 22
       protocol        = "tcp"
-      security_groups = [module.load_balancer_security_group.security_group_id]
+      cidr_block = [var.cidr_block]
     }
     , {
       description     = "Allow Application traffic load balancer security group"
