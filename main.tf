@@ -216,6 +216,7 @@ module "load_balancer" {
   target_group_protocol      = var.target_group_protocol
   enable_deletion_protection = var.enable_deletion_protection
   load_balancer_internal     = var.load_balancer_internal
+  load_balancer_target_type  = var.load_balancer_target_type
 
   health_check_healthy_threshold            = var.health_check_healthy_threshold
   load_balancer_listner_default_action_type = var.load_balancer_listner_default_action_type

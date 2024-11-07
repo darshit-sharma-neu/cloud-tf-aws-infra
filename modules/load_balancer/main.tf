@@ -5,15 +5,17 @@ resource "aws_lb" "load_balancer" {
   security_groups    = var.security_groups
   subnets            = var.subnet_identifiers
 
+
   enable_deletion_protection = var.enable_deletion_protection
 
 }
 
 resource "aws_lb_target_group" "load_balancer_target_group" {
-  name     = var.target_group_name
-  port     = var.target_group_port
-  protocol = var.target_group_protocol
-  vpc_id   = var.vpc_id
+  name        = var.target_group_name
+  port        = var.target_group_port
+  protocol    = var.target_group_protocol
+  vpc_id      = var.vpc_id
+  target_type = var.load_balancer_target_type
 
   health_check {
     protocol            = var.health_check_protocol

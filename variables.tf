@@ -297,6 +297,10 @@ variable "health_check_port" {
   type = string
 }
 
+variable "load_balancer_target_type" {
+  type = string
+}
+
 # Auto Scaling Variables
 variable "desired_capacity" {
   type = number

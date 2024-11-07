@@ -59,3 +59,7 @@ variable "load_balancer_listner_protocol" {
 variable "load_balancer_listner_default_action_type" {
   type = string
 }
+
+variable "load_balancer_target_type" {
+  type = string
+}
