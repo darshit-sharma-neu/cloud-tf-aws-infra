@@ -59,6 +59,10 @@ variable "app_security_group_name" {
 variable "app_security_group_description" {
   type = string
 }
+
+variable "my_ip" {
+  type = string
+}
 variable "app_port" {
   type = number
 }
@@ -211,5 +215,176 @@ variable "cloudwatch_policy_name" {
   type = string
 }
 variable "cloudwatch_policy_description" {
+  type = string
+}
+
+variable "load_balancer_security_group_name" {
+  type = string
+}
+variable "load_balancer_security_group_description" {
+  type = string
+}
+
+# Launch Template Variables
+variable "launch_template_name" {
+  type = string
+}
+variable "launch_template_description" {
+  type = string
+}
+variable "launch_template_key_name" {
+  type = string
+}
+variable "block_device_name" {
+  type = string
+}
+
+# Load Balancer Variables
+variable "load_balancer_name" {
+  type = string
+}
+variable "load_balancer_type" {
+  type = string
+}
+variable "target_group_name" {
+  type = string
+}
+variable "target_group_port" {
+  type = number
+}
+variable "target_group_protocol" {
+  type = string
+}
+variable "enable_deletion_protection" {
+  type = bool
+}
+variable "load_balancer_internal" {
+  type = bool
+}
+
+variable "evaluate_target_health" {
+  type = bool
+}
+
+variable "health_check_healthy_threshold" {
+  type = number
+}
+variable "load_balancer_listner_default_action_type" {
+  type = string
+}
+variable "health_check_path" {
+  type = string
+}
+variable "health_check_protocol" {
+  type = string
+}
+variable "load_balancer_listner_protocol" {
+  type = string
+}
+variable "load_balancer_listner_port" {
+  type = number
+}
+variable "health_check_timeout" {
+  type = number
+}
+variable "health_check_interval" {
+  type = number
+}
+variable "health_check_unhealthy_threshold" {
+  type = number
+}
+variable "health_check_port" {
+  type = string
+}
+
+variable "load_balancer_target_type" {
+  type = string
+}
+
+# Auto Scaling Variables
+variable "desired_capacity" {
+  type = number
+}
+variable "max_size" {
+  type = number
+}
+variable "min_size" {
+  type = number
+}
+variable "health_check_type" {
+  type = string
+}
+
+variable "autosacler_name" {
+  type = string
+}
+variable "autosacler_created_instance_name" {
+  type = string
+}
+variable "autosacler_scale_up_scaling_adjustment" {
+  type = number
+}
+variable "autosacler_scale_down_scaling_adjustment" {
+  type = number
+}
+variable "autosacler_scale_up_scaling_adjustment_type" {
+  type = string
+}
+variable "autosacler_scale_down_scaling_adjustment_type" {
+  type = string
+}
+variable "autosacler_scale_up_scaling_cooldown" {
+  type = number
+}
+variable "autosacler_scale_down_scaling_cooldown" {
+  type = number
+}
+variable "cpu_alarm_high_name" {
+  type = string
+}
+variable "cpu_alarm_high_namespace" {
+  type = string
+}
+variable "cpu_alarm_high_statistic" {
+  type = string
+}
+variable "cpu_alarm_high_comparison_operator" {
+  type = string
+}
+variable "cpu_alarm_high_threshold" {
+  type = number
+}
+variable "cpu_alarm_high_period" {
+  type = number
+}
+variable "cpu_alarm_high_evaluation_periods" {
+  type = number
+}
+variable "cpu_alarm_low_name" {
+  type = string
+}
+variable "cpu_alarm_low_namespace" {
+  type = string
+}
+variable "cpu_alarm_low_statistic" {
+  type = string
+}
+variable "cpu_alarm_low_comparison_operator" {
+  type = string
+}
+variable "cpu_alarm_low_threshold" {
+  type = number
+}
+variable "cpu_alarm_low_period" {
+  type = number
+}
+variable "cpu_alarm_low_evaluation_periods" {
+  type = number
+}
+
+variable "cpu_alarm_high_name_metric" {
+  type = string
+}
+variable "cpu_alarm_low_name_metric" {
   type = string
 }
