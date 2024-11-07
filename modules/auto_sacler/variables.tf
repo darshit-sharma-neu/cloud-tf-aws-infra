@@ -53,9 +53,6 @@ variable "cpu_alarm_high_comparison_operator" {
 variable "cpu_alarm_high_evaluation_periods" {
   type = number
 }
-variable "cpu_alarm_high_name" {
-  type = string
-}
 variable "cpu_alarm_high_namespace" {
   type = string
 }
@@ -77,9 +74,6 @@ variable "cpu_alarm_low_comparison_operator" {
 variable "cpu_alarm_low_evaluation_periods" {
   type = number
 }
-variable "cpu_alarm_low_name" {
-  type = string
-}
 variable "cpu_alarm_low_namespace" {
   type = string
 }
@@ -91,4 +85,10 @@ variable "cpu_alarm_low_statistic" {
 }
 variable "cpu_alarm_low_threshold" {
   type = number
+}
+variable "cpu_alarm_high_name_metric" {
+  type = string
+}
+variable "cpu_alarm_low_name_metric" {
+  type = string
 }

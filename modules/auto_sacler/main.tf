@@ -50,7 +50,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_alarm_high" {
   alarm_name          = var.cpu_alarm_high_name
   comparison_operator = var.cpu_alarm_high_comparison_operator
   evaluation_periods  = var.cpu_alarm_high_evaluation_periods
-  metric_name         = var.cpu_alarm_high_name
+  metric_name         = var.cpu_alarm_high_name_metric
   namespace           = var.cpu_alarm_high_namespace
   period              = var.cpu_alarm_high_period
   statistic           = var.cpu_alarm_high_statistic
@@ -65,7 +65,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_alarm_low" {
   alarm_name          = var.cpu_alarm_low_name
   comparison_operator = var.cpu_alarm_low_comparison_operator
   evaluation_periods  = var.cpu_alarm_low_evaluation_periods
-  metric_name         = var.cpu_alarm_low_name
+  metric_name         = var.cpu_alarm_low_name_metric
   namespace           = var.cpu_alarm_low_namespace
   period              = var.cpu_alarm_low_period
   statistic           = var.cpu_alarm_low_statistic

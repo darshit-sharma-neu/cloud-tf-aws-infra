@@ -59,6 +59,10 @@ variable "app_security_group_name" {
 variable "app_security_group_description" {
   type = string
 }
+
+variable "my_ip" {
+  type = string
+}
 variable "app_port" {
   type = number
 }
@@ -372,4 +376,11 @@ variable "cpu_alarm_low_period" {
 }
 variable "cpu_alarm_low_evaluation_periods" {
   type = number
+}
+
+variable "cpu_alarm_high_name_metric" {
+  type = string
+}
+variable "cpu_alarm_low_name_metric" {
+  type = string
 }

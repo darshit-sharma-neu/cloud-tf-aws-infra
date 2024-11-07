@@ -90,7 +90,7 @@ module "app_security_group" {
       from_port   = 22
       to_port     = 22
       protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
+      cidr_blocks = [var.my_ip]
     }
     , {
       description     = "Allow Application traffic load balancer security group"
@@ -147,7 +147,6 @@ module "db_instance" {
   db_param_group_description = var.db_param_group_description
 
 }
-
 
 # Create S3 bucket
 module "s3_bucket" {
@@ -254,6 +253,7 @@ module "autoscaler" {
   cpu_alarm_high_name                = var.cpu_alarm_high_name
   cpu_alarm_high_namespace           = var.cpu_alarm_high_namespace
   cpu_alarm_high_statistic           = var.cpu_alarm_high_statistic
+  cpu_alarm_high_name_metric         = var.cpu_alarm_high_name_metric
   cpu_alarm_high_comparison_operator = var.cpu_alarm_high_comparison_operator
   cpu_alarm_high_threshold           = var.cpu_alarm_high_threshold
   cpu_alarm_high_period              = var.cpu_alarm_high_period
@@ -262,6 +262,7 @@ module "autoscaler" {
   cpu_alarm_low_name                = var.cpu_alarm_low_name
   cpu_alarm_low_namespace           = var.cpu_alarm_low_namespace
   cpu_alarm_low_statistic           = var.cpu_alarm_low_statistic
+  cpu_alarm_low_name_metric         = var.cpu_alarm_low_name_metric
   cpu_alarm_low_comparison_operator = var.cpu_alarm_low_comparison_operator
   cpu_alarm_low_threshold           = var.cpu_alarm_low_threshold
   cpu_alarm_low_period              = var.cpu_alarm_low_period
