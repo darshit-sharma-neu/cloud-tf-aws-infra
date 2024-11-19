@@ -51,6 +51,20 @@ variable "private_route_table_tag_name" {
   type = string
 }
 
+variable "nat_eip_tag_name" {
+  type = string
+}
+variable "nat_gateway_tag_name" {
+  type = string
+}
+
+variable enable_dns_hostnames{
+  type = bool
+}
+variable enable_dns_support{
+  type = bool
+}
+
 # EC2 Variables
 variable "app_security_group_name" {
   type = string
@@ -239,6 +253,10 @@ variable "block_device_name" {
   type = string
 }
 
+variable "launch_template_update_default_version" {
+  type = bool
+}
+
 # Load Balancer Variables
 variable "load_balancer_name" {
   type = string
@@ -387,4 +405,35 @@ variable "cpu_alarm_high_name_metric" {
 }
 variable "cpu_alarm_low_name_metric" {
   type = string
+}
+
+# SNS Variables
+variable "mailer_sns_topic_name" {
+  type = string
+}
+
+variable "email_from" {
+  type = string
+}
+variable "base_url" {
+  type = string
+}
+variable "sendgrid_api_key" {
+  type = string
+} 
+
+variable lambda_function_name{
+  type = string
+}
+variable handler{
+  type = string
+}
+variable runtime{
+  type = string
+}
+variable memory{
+  type = number
+}
+variable timeout{
+  type = number
 }

@@ -9,6 +9,7 @@ resource "aws_launch_template" "webapp_launch_template" {
   instance_type           = var.instance_type
   disable_api_termination = var.disable_api_termination
   key_name                = var.launch_template_key_name
+  update_default_version  = var.update_default_version
 
   # Security Configuration
   iam_instance_profile {
@@ -40,6 +41,8 @@ resource "aws_launch_template" "webapp_launch_template" {
     Environment=DB_PORT=${var.db_port}
     Environment=DB_NAME=${var.db_name}
     Environment=BUCKET_NAME=${var.bucket_name}
+    Environment=SNS_ARN=${var.sns_topic_arn}
+    Environment=AWS_REGION=${var.region}
     EOL
 
     cat <<EOT > /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json

@@ -9,7 +9,7 @@ resource "aws_autoscaling_group" "autoscaler" {
   # Launch Template Configuration
   launch_template {
     id      = var.launch_template_id
-    version = "$Latest"
+    version = "$Default"
   }
 
   # Network Configuration

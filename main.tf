@@ -14,6 +14,10 @@ module "vpc" {
   public_route_table_tag_name             = var.public_route_table_tag_name
   private_route_table_tag_name            = var.private_route_table_tag_name
   public_route_table_association_tag_name = var.public_route_table_association_tag_name
+  nat_eip_tag_name                        = var.nat_eip_tag_name
+  nat_gateway_tag_name                    = var.nat_gateway_tag_name
+  enable_dns_hostnames                    = var.enable_dns_hostnames
+  enable_dns_support                      = var.enable_dns_support
 
 }
 
@@ -176,10 +180,30 @@ resource "aws_iam_instance_profile" "webapp_instance_profile" {
   role = module.iam_role.role_name
 }
 
+# Create Lambda Function
+module "lambda" {
+  source = "./modules/lambda"
+
+  email_from            = var.email_from
+  base_url              = var.base_url
+  vpc_id                = module.vpc.vpc_id
+  subnets               = module.vpc.private_subnet_ids
+  sendgrid_api_key      = var.sendgrid_api_key
+  mailer_sns_topic_name = var.mailer_sns_topic_name
+
+  lambda_function_name  = var.lambda_function_name
+  handler               = var.handler
+  runtime               = var.runtime
+  memory                = var.memory
+  timeout               = var.timeout
+}
+
 # Create Launch Template
 module "launch_template" {
   source = "./modules/launch_template"
 
+  update_default_version      = var.launch_template_update_default_version
+  region                      = var.aws_region
   ami                         = var.ami
   instance_type               = var.instance_type
   launch_template_name        = var.launch_template_name
@@ -194,6 +218,7 @@ module "launch_template" {
   db_port                     = var.db_port
   db_username                 = var.db_username
   db_password                 = var.db_password
+  sns_topic_arn               = module.lambda.sns_topic_arn
   delete_on_termination       = var.delete_on_termination
   iam_instance_profile        = aws_iam_instance_profile.webapp_instance_profile.name
   disable_api_termination     = var.disable_api_termination
