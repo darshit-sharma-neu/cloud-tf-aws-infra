@@ -191,11 +191,11 @@ module "lambda" {
   sendgrid_api_key      = var.sendgrid_api_key
   mailer_sns_topic_name = var.mailer_sns_topic_name
 
-  lambda_function_name  = var.lambda_function_name
-  handler               = var.handler
-  runtime               = var.runtime
-  memory                = var.memory
-  timeout               = var.timeout
+  lambda_function_name = var.lambda_function_name
+  handler              = var.handler
+  runtime              = var.runtime
+  memory               = var.memory
+  timeout              = var.timeout
 }
 
 # Create Launch Template

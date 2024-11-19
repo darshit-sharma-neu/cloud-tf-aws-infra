@@ -49,9 +49,9 @@ variable "nat_gateway_tag_name" {
   type = string
 }
 
-variable enable_dns_hostnames{
+variable "enable_dns_hostnames" {
   type = bool
 }
-variable enable_dns_support{
+variable "enable_dns_support" {
   type = bool
 }

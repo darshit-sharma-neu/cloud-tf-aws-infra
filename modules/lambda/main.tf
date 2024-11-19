@@ -2,7 +2,7 @@
 resource "aws_sns_topic" "mailer_sns_topic" {
   name = var.mailer_sns_topic_name
   policy = jsonencode({
-     Version = "2012-10-17",
+    Version = "2012-10-17",
     Id      = "sns-topic-policy",
     Statement = [
       {

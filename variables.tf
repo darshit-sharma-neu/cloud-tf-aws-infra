@@ -58,10 +58,10 @@ variable "nat_gateway_tag_name" {
   type = string
 }
 
-variable enable_dns_hostnames{
+variable "enable_dns_hostnames" {
   type = bool
 }
-variable enable_dns_support{
+variable "enable_dns_support" {
   type = bool
 }
 
@@ -420,20 +420,20 @@ variable "base_url" {
 }
 variable "sendgrid_api_key" {
   type = string
-} 
+}
 
-variable lambda_function_name{
+variable "lambda_function_name" {
   type = string
 }
-variable handler{
+variable "handler" {
   type = string
 }
-variable runtime{
+variable "runtime" {
   type = string
 }
-variable memory{
+variable "memory" {
   type = number
 }
-variable timeout{
+variable "timeout" {
   type = number
 }

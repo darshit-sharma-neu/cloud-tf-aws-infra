@@ -67,10 +67,10 @@ variable "sns_topic_arn" {
   type = string
 }
 
-variable region{
+variable "region" {
   type = string
 }
 
-variable update_default_version{
+variable "update_default_version" {
   type = bool
 }
