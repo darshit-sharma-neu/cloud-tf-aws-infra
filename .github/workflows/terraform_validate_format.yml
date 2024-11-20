@@ -21,6 +21,12 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
+      - name: Create Dummy Lambda Package
+        run: |
+          mkdir -p modules/lambda
+          echo "dummy content" > modules/lambda/dummy.txt
+          zip -j modules/lambda/lambda-package.zip modules/lambda/dummy.txt
+
       - name: Terraform init
         run: terraform init
 

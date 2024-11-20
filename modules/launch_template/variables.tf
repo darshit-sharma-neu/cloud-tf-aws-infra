@@ -63,3 +63,14 @@ variable "launch_template_key_name" {
 variable "block_device_name" {
   type = string
 }
+variable "sns_topic_arn" {
+  type = string
+}
+
+variable "region" {
+  type = string
+}
+
+variable "update_default_version" {
+  type = bool
+}
