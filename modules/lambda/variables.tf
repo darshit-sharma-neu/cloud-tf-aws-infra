@@ -43,3 +43,11 @@ variable "timeout" {
 variable "memory" {
   type = number
 }
+
+variable "lambda_vpc_policy_arn" {
+  type = string
+}
+
+variable "account_number" {
+  type = string
+}

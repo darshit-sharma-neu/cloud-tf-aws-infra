@@ -190,6 +190,8 @@ module "lambda" {
   subnets               = module.vpc.private_subnet_ids
   sendgrid_api_key      = var.sendgrid_api_key
   mailer_sns_topic_name = var.mailer_sns_topic_name
+  lambda_vpc_policy_arn = var.lambda_vpc_policy_arn
+  account_number        = var.account_number
 
   lambda_function_name = var.lambda_function_name
   handler              = var.handler

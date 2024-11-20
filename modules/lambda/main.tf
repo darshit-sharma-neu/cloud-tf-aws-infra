@@ -10,7 +10,7 @@ resource "aws_sns_topic" "mailer_sns_topic" {
         Effect    = "Allow",
         Principal = "*",
         Action    = "sns:Publish",
-        Resource  = "arn:aws:sns:us-east-1:911167914313:csye6225-mailer-sns-topic"
+        Resource  = "arn:aws:sns:us-east-1:${var.account_number}:${var.mailer_sns_topic_name}"
       }
     ]
     }
@@ -75,7 +75,7 @@ resource "aws_iam_role_policy_attachment" "lambda_custom_policy" {
 # Attach AWS Managed Policy to the Role
 resource "aws_iam_role_policy_attachment" "lambda_vpc_access_policy" {
   role       = module.iam_lambda_role.role_name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+  policy_arn = var.lambda_vpc_policy_arn
 }
 
 module "security_group" {

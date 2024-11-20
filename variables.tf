@@ -1,3 +1,7 @@
+variable "account_number" {
+  type = string
+}
+
 # VPC Variables
 variable "availability_zones" {
   type = list(string)
@@ -411,7 +415,6 @@ variable "cpu_alarm_low_name_metric" {
 variable "mailer_sns_topic_name" {
   type = string
 }
-
 variable "email_from" {
   type = string
 }
@@ -436,4 +439,8 @@ variable "memory" {
 }
 variable "timeout" {
   type = number
+}
+
+variable "lambda_vpc_policy_arn" {
+  type = string
 }
