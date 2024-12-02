@@ -13,3 +13,7 @@ variable "transition_rule_days" {
 variable "transition_rule_storage_class" {
   type = string
 }
+
+variable "kms_key_arn" {
+  type = string
+}

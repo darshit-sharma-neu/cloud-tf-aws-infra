@@ -60,7 +60,33 @@ module "iam_lambda_policy" {
           "sns:Subscribe",
           "sns:Publish"
         ],
-        Resource = "arn:aws:sns:us-east-1:911167914313:csye6225-mailer-sns-topic"
+        Resource = "arn:aws:sns:us-east-1:${var.account_number}:csye6225-mailer-sns-topic"
+      }
+    ]
+  })
+}
+
+module "secret_manager_policy" {
+  source = "../iam/policies"
+
+  policy_name        = var.secret_manager_policy_name
+  policy_description = var.secret_manager_policy_description
+  policy_document = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Sid      = "AllowSecretsManagerAccess",
+        Effect   = "Allow",
+        Action   = "secretsmanager:GetSecretValue",
+        Resource = "${var.secret_arn}"
+        }, {
+        Sid    = "AllowKMSKeyAccess",
+        Effect = "Allow",
+        Action = [
+          "kms:Decrypt",
+          "kms:DescribeKey"
+        ],
+        Resource = var.kms_key_ids
       }
     ]
   })
@@ -70,6 +96,11 @@ module "iam_lambda_policy" {
 resource "aws_iam_role_policy_attachment" "lambda_custom_policy" {
   role       = module.iam_lambda_role.role_name
   policy_arn = module.iam_lambda_policy.policy_arn
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_secrets_policy" {
+  role       = module.iam_lambda_role.role_name
+  policy_arn = module.secret_manager_policy.policy_arn
 }
 
 # Attach AWS Managed Policy to the Role
@@ -111,9 +142,9 @@ resource "aws_lambda_function" "lambda" {
 
   environment {
     variables = {
-      SENDGRID_API_KEY = var.sendgrid_api_key
-      EMAIL_FROM       = var.email_from
-      BASE_URL         = var.base_url
+      SENDGRID_SECRET_ID = var.sendgrid_secret_id
+      EMAIL_FROM         = var.email_from
+      BASE_URL           = var.base_url
     }
   }
 }

@@ -74,3 +74,15 @@ variable "region" {
 variable "update_default_version" {
   type = bool
 }
+
+variable "kms_key_arn" {
+  type = string
+}
+
+variable "db_secret_name" {
+  type = string
+}
+
+variable "ebs_encrypted" {
+  type = bool
+}

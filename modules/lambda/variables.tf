@@ -1,4 +1,4 @@
-variable "sendgrid_api_key" {
+variable "sendgrid_secret_id" {
   type = string
 }
 variable "email_from" {
@@ -50,4 +50,22 @@ variable "lambda_vpc_policy_arn" {
 
 variable "account_number" {
   type = string
+}
+
+variable "secret_manager_policy_name" {
+  type = string
+}
+variable "secret_manager_policy_description" {
+  type = string
+}
+
+variable "secret_name" {
+  type = string
+}
+
+variable "secret_arn" {
+  type = string
+}
+variable "kms_key_ids" {
+  type = list(string)
 }

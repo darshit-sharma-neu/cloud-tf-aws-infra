@@ -63,3 +63,7 @@ variable "load_balancer_listner_default_action_type" {
 variable "load_balancer_target_type" {
   type = string
 }
+
+variable "ssl_certificate_arn" {
+  type = string
+}

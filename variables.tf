@@ -261,6 +261,10 @@ variable "launch_template_update_default_version" {
   type = bool
 }
 
+variable "ebs_encrypted" {
+  type = bool
+}
+
 # Load Balancer Variables
 variable "load_balancer_name" {
   type = string
@@ -320,6 +324,10 @@ variable "health_check_port" {
 }
 
 variable "load_balancer_target_type" {
+  type = string
+}
+
+variable "ssl_certificate_arn" {
   type = string
 }
 
@@ -442,5 +450,18 @@ variable "timeout" {
 }
 
 variable "lambda_vpc_policy_arn" {
+  type = string
+}
+
+variable "secret_manager_policy_description" {
+  type = string
+}
+variable "secret_manager_policy_name" {
+  type = string
+}
+variable "rds_secret_name" {
+  type = string
+}
+variable "sendgrid_secret_name" {
   type = string
 }

@@ -20,6 +20,42 @@ module "vpc" {
   enable_dns_support                      = var.enable_dns_support
 
 }
+# Create Keys
+module "keys" {
+  source = "./modules/keys"
+
+  current_acc_id         = var.account_number
+  ec2_instance_role_name = module.iam_role.role_name
+  lambda_role_arn        = module.lambda.lambda_role_arn
+}
+
+# Create DB Password
+resource "random_password" "rds_password" {
+  length  = 16
+  special = false
+}
+
+resource "aws_secretsmanager_secret" "rds_secret" {
+  name       = var.rds_secret_name
+  kms_key_id = module.keys.secrets_manager_key_arn
+}
+
+
+resource "aws_secretsmanager_secret_version" "rds_secret_version" {
+  secret_id     = aws_secretsmanager_secret.rds_secret.id
+  secret_string = random_password.rds_password.result
+}
+resource "aws_secretsmanager_secret" "sendgrid_api_key" {
+  name       = var.sendgrid_secret_name
+  kms_key_id = module.keys.secrets_manager_key_arn
+}
+
+
+resource "aws_secretsmanager_secret_version" "sendgrid_api_key_version" {
+  secret_id     = aws_secretsmanager_secret.sendgrid_api_key.id
+  secret_string = var.sendgrid_api_key
+}
+
 
 # Create rds security group
 module "rds_security_group" {
@@ -128,7 +164,7 @@ module "db_instance" {
   # DB details
   db_username = var.db_username
   db_name     = var.db_name
-  db_password = var.db_password
+  db_password = random_password.rds_password.result
   db_port     = var.db_port
 
   # Security group
@@ -150,6 +186,9 @@ module "db_instance" {
   db_param_group_family      = var.db_param_group_family
   db_param_group_description = var.db_param_group_description
 
+  # Key details
+  kms_key_id = module.keys.rds_key_arn
+
 }
 
 # Create S3 bucket
@@ -161,18 +200,25 @@ module "s3_bucket" {
   sse_algorithm                 = var.sse_algorithm
   force_destroy                 = var.force_destroy
   transition_rule_status        = var.transition_rule_status
+  kms_key_arn                   = module.keys.s3_key_arn
 }
 
 # Create IAM Role
 module "iam_role" {
   source = "./modules/iam"
 
-  s3_bucket_name                = module.s3_bucket.bucket_name
-  role_name                     = var.role_name
-  s3_policy_name                = var.s3_policy_name
-  s3_policy_description         = var.s3_policy_description
-  cloudwatch_policy_name        = var.cloudwatch_policy_name
-  cloudwatch_policy_description = var.cloudwatch_policy_description
+  s3_bucket_name                    = module.s3_bucket.bucket_name
+  role_name                         = var.role_name
+  s3_policy_name                    = var.s3_policy_name
+  s3_policy_description             = var.s3_policy_description
+  cloudwatch_policy_name            = var.cloudwatch_policy_name
+  cloudwatch_policy_description     = var.cloudwatch_policy_description
+  account_number                    = var.account_number
+  region                            = var.aws_region
+  secret_manager_policy_description = var.secret_manager_policy_description
+  secret_manager_policy_name        = var.secret_manager_policy_name
+  secret_name                       = aws_secretsmanager_secret.rds_secret.arn
+  kms_key_ids                       = [module.keys.secrets_manager_key_arn, module.keys.s3_key_arn, module.keys.rds_key_arn]
 }
 
 resource "aws_iam_instance_profile" "webapp_instance_profile" {
@@ -188,16 +234,21 @@ module "lambda" {
   base_url              = var.base_url
   vpc_id                = module.vpc.vpc_id
   subnets               = module.vpc.private_subnet_ids
-  sendgrid_api_key      = var.sendgrid_api_key
+  sendgrid_secret_id    = aws_secretsmanager_secret.sendgrid_api_key.name
   mailer_sns_topic_name = var.mailer_sns_topic_name
   lambda_vpc_policy_arn = var.lambda_vpc_policy_arn
   account_number        = var.account_number
 
-  lambda_function_name = var.lambda_function_name
-  handler              = var.handler
-  runtime              = var.runtime
-  memory               = var.memory
-  timeout              = var.timeout
+  lambda_function_name              = var.lambda_function_name
+  handler                           = var.handler
+  runtime                           = var.runtime
+  memory                            = var.memory
+  timeout                           = var.timeout
+  kms_key_ids                       = [module.keys.secrets_manager_key_arn]
+  secret_manager_policy_description = "Lambda function secret manager policy"
+  secret_name                       = aws_secretsmanager_secret.sendgrid_api_key.name
+  secret_manager_policy_name        = "lambda_secret_manager_policy"
+  secret_arn                        = aws_secretsmanager_secret.sendgrid_api_key.arn
 }
 
 # Create Launch Template
@@ -228,6 +279,10 @@ module "launch_template" {
   cloudwatch_logs_group_name  = var.cloudwatch_logs_group_name
   cloudwatch_metric_namespace = var.cloudwatch_metric_namespace
   security_group_ids          = [module.app_security_group.security_group_id]
+  kms_key_arn                 = module.keys.webapp_key_arn
+  db_secret_name              = aws_secretsmanager_secret.rds_secret.name
+  ebs_encrypted               = var.ebs_encrypted
+
 }
 # Create Load Balaner
 module "load_balancer" {
@@ -244,6 +299,7 @@ module "load_balancer" {
   enable_deletion_protection = var.enable_deletion_protection
   load_balancer_internal     = var.load_balancer_internal
   load_balancer_target_type  = var.load_balancer_target_type
+  ssl_certificate_arn        = var.ssl_certificate_arn
 
   health_check_healthy_threshold            = var.health_check_healthy_threshold
   load_balancer_listner_default_action_type = var.load_balancer_listner_default_action_type
