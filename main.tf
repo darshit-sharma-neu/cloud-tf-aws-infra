@@ -36,7 +36,7 @@ resource "random_password" "rds_password" {
 }
 
 resource "aws_secretsmanager_secret" "rds_secret" {
-  name       = "rds-password-6"
+  name       = var.rds_secret_name
   kms_key_id = module.keys.secrets_manager_key_arn
 }
 
@@ -46,7 +46,7 @@ resource "aws_secretsmanager_secret_version" "rds_secret_version" {
   secret_string = random_password.rds_password.result
 }
 resource "aws_secretsmanager_secret" "sendgrid_api_key" {
-  name       = "sendgrid-api-key-3"
+  name       = var.sendgrid_secret_name
   kms_key_id = module.keys.secrets_manager_key_arn
 }
 

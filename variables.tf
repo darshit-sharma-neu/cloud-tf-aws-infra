@@ -459,3 +459,9 @@ variable "secret_manager_policy_description" {
 variable "secret_manager_policy_name" {
   type = string
 }
+variable "rds_secret_name" {
+  type = string
+}
+variable "sendgrid_secret_name" {
+  type = string
+}
