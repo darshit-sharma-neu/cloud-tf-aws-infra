@@ -1,6 +1,6 @@
 # Create VPC
 module "vpc" {
-  source = "./modules/vpc"
+    source = "./modules/vpc"
 
   availability_zones    = var.availability_zones
   cidr_block            = var.cidr_block
