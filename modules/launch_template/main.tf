@@ -26,18 +26,24 @@ resource "aws_launch_template" "webapp_launch_template" {
       volume_size           = var.volume_size
       volume_type           = var.volume_type
       delete_on_termination = var.delete_on_termination
+      encrypted             = var.ebs_encrypted
+      kms_key_id            = var.kms_key_arn
     }
   }
 
   # User Data
   user_data = base64encode(<<-EOF
     #!/bin/bash
+    sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    sudo unzip awscliv2.zip
+    sudo ./aws/install
+    DB_PASS=$(aws secretsmanager get-secret-value --secret-id ${var.db_secret_name} --query SecretString --output text --region ${var.region})
     sudo mkdir -p /etc/systemd/system/webapp.service.d
-    sudo tee /etc/systemd/system/webapp.service.d/env.conf > /dev/null <<EOL
+    sudo bash -c "cat > /etc/systemd/system/webapp.service.d/env.conf" <<EOL
     [Service]
     Environment=DB_HOST=${var.db_host}
     Environment=DB_USER=${var.db_username}
-    Environment=DB_PASS=${var.db_password}
+    Environment=DB_PASS=$DB_PASS
     Environment=DB_PORT=${var.db_port}
     Environment=DB_NAME=${var.db_name}
     Environment=BUCKET_NAME=${var.bucket_name}

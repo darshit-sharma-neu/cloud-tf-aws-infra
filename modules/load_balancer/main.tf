@@ -32,6 +32,7 @@ resource "aws_lb_listener" "load_balancer_listner" {
   load_balancer_arn = aws_lb.load_balancer.arn
   port              = var.load_balancer_listner_port
   protocol          = var.load_balancer_listner_protocol
+  certificate_arn   = var.ssl_certificate_arn
 
   default_action {
     type             = var.load_balancer_listner_default_action_type

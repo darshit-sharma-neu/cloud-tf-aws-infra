@@ -57,3 +57,7 @@ variable "db_subnet_group_name" {
 variable "db_port" {
   type = number
 }
+
+variable "kms_key_id" {
+  type = string
+}

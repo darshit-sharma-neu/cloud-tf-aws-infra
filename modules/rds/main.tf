@@ -34,9 +34,11 @@ resource "aws_db_instance" "rds_instance" {
   deletion_protection  = var.db_deletion_protection
   allocated_storage    = var.db_allocated_storage
   port                 = var.db_port
+  storage_encrypted    = true
 
   vpc_security_group_ids = var.db_vpc_security_group_ids
   db_subnet_group_name   = aws_db_subnet_group.db_subnet_group.name
+  kms_key_id             = var.kms_key_id
 
   tags = {
     name = var.db_identifier
