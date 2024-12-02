@@ -453,9 +453,9 @@ variable "lambda_vpc_policy_arn" {
   type = string
 }
 
-variable "secret_manager_policy_description"{
+variable "secret_manager_policy_description" {
   type = string
 }
-variable "secret_manager_policy_name"{
+variable "secret_manager_policy_name" {
   type = string
 }

@@ -143,8 +143,8 @@ resource "aws_lambda_function" "lambda" {
   environment {
     variables = {
       SENDGRID_SECRET_ID = var.sendgrid_secret_id
-      EMAIL_FROM       = var.email_from
-      BASE_URL         = var.base_url
+      EMAIL_FROM         = var.email_from
+      BASE_URL           = var.base_url
     }
   }
 }

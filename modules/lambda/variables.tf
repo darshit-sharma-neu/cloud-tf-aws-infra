@@ -52,20 +52,20 @@ variable "account_number" {
   type = string
 }
 
-variable "secret_manager_policy_name"{
+variable "secret_manager_policy_name" {
   type = string
 }
-variable "secret_manager_policy_description"{
-  type = string
-}
-
-variable "secret_name"{
+variable "secret_manager_policy_description" {
   type = string
 }
 
-variable "secret_arn"{
+variable "secret_name" {
   type = string
 }
-variable "kms_key_ids"{
+
+variable "secret_arn" {
+  type = string
+}
+variable "kms_key_ids" {
   type = list(string)
 }
