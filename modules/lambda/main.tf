@@ -60,7 +60,7 @@ module "iam_lambda_policy" {
           "sns:Subscribe",
           "sns:Publish"
         ],
-        Resource = "arn:aws:sns:us-east-1:911167914313:csye6225-mailer-sns-topic"
+        Resource = "arn:aws:sns:us-east-1:${var.account_number}:csye6225-mailer-sns-topic"
       }
     ]
   })
